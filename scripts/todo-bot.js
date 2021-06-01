@@ -25,9 +25,19 @@ module.exports = robot => {
     msg.send('削除しました: ' + task);
   });
   robot.respond(/list/i, msg => {
-    msg.send(todo.list().join('\n'));
+    const list = todo.list();
+    if (list.length === 0) {　//listの配列がない場合、msgを送る
+    msg.send('TODOはありません。');
+  } else {　//const~がなくても普通に動く　；が無駄に多いと宣言が必要とか言われる　
+      msg.send(todo.list().join('\n'));
+    } 
   });
   robot.respond(/donelist/i, msg => {
-    msg.send(todo.donelist().join('\n'));
+    const donelist = todo.donelist();
+    if (donelist.length === 0) {
+      msg.send('完了したTODOはありません。')
+    } else {
+      msg.send(todo.donelist().join('\n'));
+    }  
   });
 };
